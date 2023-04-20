@@ -1,0 +1,96 @@
+<div class="presentation-grid">
+  <div class="grid-numbers p-4">
+    <h2>Details</h2>
+    <table class="table table-bordered">
+      <tbody>
+        <tr>
+          <th colspan="6">Eigenkapital</th>
+        </tr>
+        <tr>
+          <th></th>
+          <th>Summe</th>
+          <th></th>
+          <th></th>
+        </tr>
+        <tr>
+          <td></td>
+          <td>{{ data.cash | currency:'EUR':'€':'1.2-2':'de-DE' }}</td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <th colspan="6">Bausparer</th>
+        </tr>
+        <tr>
+          <th></th>
+          <th>Summe</th>
+          <th>Zinssatz</th>
+          <th>Zinsen</th>
+          <th>monatliche Rate</th>
+          <th>Gesamt</th>
+        </tr>
+        <tr *ngFor="let item of data.buildingSocietySavers">
+          <td></td>
+          <td>{{ item.sum | currency:'EUR':'€':'1.2-2':'de-DE' }}</td>
+          <td>{{ (item.interest / 100) | percent }}</td>
+          <td>{{ item.result.interestSum | currency:'EUR':'€':'1.2-2':'de-DE' }}</td>
+          <td>{{ item.monthlyRate | currency:'EUR':'€':'1.2-2':'de-DE'  }}</td>
+          <td>{{ item.result.sum | currency:'EUR':'€':'1.2-2':'de-DE' }}</td>
+        </tr>
+        <tr>
+          <th colspan="6">Annuitätendarlehen</th>
+        </tr>
+        <tr>
+          <th></th>
+          <th>Summe</th>
+          <th>Zinssatz</th>
+          <th>Zinsen</th>
+          <th>Tilgungssatz</th>
+          <th>Gesamt</th>
+        </tr>
+        <tr *ngFor="let item of data.credits">
+          <td></td>
+          <td>{{ item.sum | currency:'EUR':'€':'1.2-2':'de-DE' }}</td>
+          <td>{{ (item.interest / 100) | percent }}</td>
+          <td>{{ item.result.interestSum | currency:'EUR':'€':'1.2-2':'de-DE' }}</td>
+          <td>{{ (item.acquittance / 100) | percent }}</td>
+          <td>{{ item.result.sum | currency:'EUR':'€':'1.2-2':'de-DE' }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="grid-graphs">
+    <div class="col-12 p-2">
+      <div echarts [options]="data.chartData" [autoResize]="true"></div>
+    </div>
+
+
+
+  </div>
+  <div class="grid-house">
+    <div class="house-wrapper">
+      <img src="assets/house.svg">
+      <div class="house-blueprint">
+        <div class="house-credit house-part"
+         [style.height]="data.creditPercentStyle()"
+         [ngClass]="{'show': data.hasCredits()}"
+         [attr.data-percent]="data.creditPercent() | number:'1.0-2':'de-DE'"></div>
+
+        <div class="house-social house-part"
+        [style.height]="data.buildingSocietySaversPercentStyle()"
+        [ngClass]="{'show': data.hasBuildingSocietySavers()}"
+        [attr.data-percent]="data.buildingSocietySaversPercent() | number:'1.0-2':'de-DE'"></div>
+
+        <div class="house-cash house-part"
+        [style.height]="data.cashPercentStyle()"
+        [ngClass]="{'show': data.cash > 0}"
+        [attr.data-percent]="data.cashPercent() | number:'1.0-2':'de-DE'"></div>
+      </div>
+    </div>
+    <div class="house-cost d-flex justify-content-center">
+      <h1>
+        {{ data.cost | currency:'EUR':'€':'1.2-2':'de-DE' }}
+      </h1>
+    </div>
+  </div>
+</div>
