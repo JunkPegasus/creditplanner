@@ -16,7 +16,8 @@ export class ConsultantComponent {
   public data: CalculationModel;
 
   constructor() {
-    this.data = new CalculationModel(
+    try {
+      this.data = new CalculationModel(
       {
         cost: 0,
         cash: 0,
@@ -29,7 +30,14 @@ export class ConsultantComponent {
     let jsonData = localStorage.getItem(CONSTANTS.STORAGE_KEY);
     if(jsonData != undefined) {
       this.data = new CalculationModel(<CalculationInterface><unknown>JSON.parse(jsonData));
+    } else {
+      this.resetData();
     }
+    } catch(ex) {
+      console.warn("Your data could not be read. Initializing with new.");
+      this.data = this.resetData();
+    }
+
   }
 
   public saveData() {
@@ -37,7 +45,7 @@ export class ConsultantComponent {
     localStorage.setItem(CONSTANTS.STORAGE_KEY, JSON.stringify(this.data));
   }
 
-  public resetData() {
+  public resetData(): CalculationModel {
     this.data = new CalculationModel({
       cost: 0,
       cash: 0,
@@ -47,6 +55,8 @@ export class ConsultantComponent {
       buildingSocietySaversBridged: new Array<BuildingSocietySaverBridgedModel>()
     });
     this.saveData();
+
+    return this.data;
   }
 
   public addBuildingSocietySavers() {
