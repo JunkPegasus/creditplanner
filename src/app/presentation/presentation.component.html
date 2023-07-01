@@ -1,27 +1,25 @@
+<nav class="nav p-2">
+    <img src="assets/logo.svg"/>
+</nav>
+
 <div class="presentation-grid">
   <div class="grid-numbers p-4">
     <h2>Details</h2>
-    <table class="table table-bordered">
+    <table class="table table-borderless">
       <tbody>
         <tr>
-          <th colspan="6">Eigenkapital</th>
+          <th colspan="6" class="detail-header">Eigenkapital</th>
         </tr>
         <tr>
           <th></th>
           <th>Summe</th>
-          <th></th>
-          <th></th>
-        </tr>
-        <tr>
-          <td></td>
           <td>{{ data.cash | currency:'EUR':'€':'1.2-2':'de-DE' }}</td>
-          <td></td>
-          <td></td>
+          <th></th>
         </tr>
-        <tr>
-          <th colspan="6">Bausparer</th>
+        <tr *ngIf="data.buildingSocietySavers.length > 0">
+          <th colspan="6" class="detail-header">Bausparer</th>
         </tr>
-        <tr>
+        <tr *ngIf="data.buildingSocietySavers.length > 0">
           <th></th>
           <th>Summe</th>
           <th>Zinssatz</th>
@@ -37,10 +35,29 @@
           <td>{{ item.monthlyRate | currency:'EUR':'€':'1.2-2':'de-DE'  }}</td>
           <td>{{ item.result.sum | currency:'EUR':'€':'1.2-2':'de-DE' }}</td>
         </tr>
-        <tr>
-          <th colspan="6">Annuitätendarlehen</th>
+        <tr *ngIf="data.buildingSocietySaversBridged.length > 0">
+          <th colspan="6" class="detail-header">Bausparer (überbrückt)</th>
         </tr>
-        <tr>
+        <tr *ngIf="data.buildingSocietySaversBridged.length > 0">
+          <th></th>
+          <th>Summe</th>
+          <th>Zinssatz</th>
+          <th>Zinsen</th>
+          <th>monatliche Rate</th>
+          <th>Gesamt</th>
+        </tr>
+        <tr *ngFor="let item of data.buildingSocietySaversBridged">
+          <td></td>
+          <td>{{ item.sum | currency:'EUR':'€':'1.2-2':'de-DE' }}</td>
+          <td>{{ (item.interest / 100) | percent }}</td>
+          <td>{{ item.result.interestSum | currency:'EUR':'€':'1.2-2':'de-DE' }}</td>
+          <td>{{ item.monthlyRate | currency:'EUR':'€':'1.2-2':'de-DE'  }}</td>
+          <td>{{ item.result.sum | currency:'EUR':'€':'1.2-2':'de-DE' }}</td>
+        </tr>
+        <tr *ngIf="data.credits.length > 0">
+          <th colspan="6" class="detail-header">Annuitätendarlehen</th>
+        </tr>
+        <tr *ngIf="data.credits.length > 0">
           <th></th>
           <th>Summe</th>
           <th>Zinssatz</th>
@@ -69,7 +86,7 @@
   </div>
   <div class="grid-house">
     <div class="house-wrapper">
-      <img src="assets/house.svg">
+      <img src="assets/Icon_house.svg">
       <div class="house-blueprint">
         <div class="house-credit house-part"
          [style.height]="data.creditPercentStyle()"
@@ -86,9 +103,20 @@
         [ngClass]="{'show': data.cash > 0}"
         [attr.data-percent]="data.cashPercent() | number:'1.0-2':'de-DE'"></div>
       </div>
+      <div class="house-lines">
+        <div class="line line-credit"
+          [style.height]="data.creditPercentStyle()"
+          [ngClass]="{'show': data.hasCredits()}"></div>
+        <div class="line line-social"
+          [style.height]="data.buildingSocietySaversPercentStyle()"
+          [ngClass]="{'show': data.hasBuildingSocietySavers()}"></div>
+        <div class="line line-cash"
+          [style.height]="data.cashPercentStyle()"
+          [ngClass]="{'show': data.cash > 0}"></div>
+      </div>
     </div>
-    <div class="house-cost d-flex justify-content-center">
-      <h1>
+    <div class="house-cost d-flex justify-content-center mt-5">
+      <h1 class="display-2 mt-4">
         {{ data.cost | currency:'EUR':'€':'1.2-2':'de-DE' }}
       </h1>
     </div>

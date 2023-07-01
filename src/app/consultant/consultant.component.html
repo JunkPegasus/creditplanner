@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg bg-body-tertiary border-bottom border-1 border-light-subtle">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">Creditplanner</a>
+    <a class="navbar-brand" href="#">Hausplaner</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -71,7 +71,60 @@
           <input class="form-control" [(ngModel)]="item.monthlyRate" type="number" name="buildingSocietySaverMonthlyRate{{i}}">
         </div>
       </div>
+      <div class="col-12 mt-3">
+        <button class="btn btn-sm btn-outline-danger" (click)="removeBuildingSocietySavers(item.id)">Löschen</button>
+      </div>
     </div>
+
+    <h5>Bausparer (überbrückt)</h5>
+    <button class="btn btn-sm btn-outline-primary mb-2" (click)="addBuildingSocietySaverBridged()">Bausparer (überbrückt) hinzufügen</button>
+    <div class="d-flex flex-wrap align-items-center mb-2 society-wrapper" *ngFor="let item of data.buildingSocietySaversBridged; let i = index">
+      <div class="col-8 mb-2">
+        <div class="input-group">
+          <span class="input-group-text">Darlehenssumme</span>
+          <input class="form-control" [(ngModel)]="item.sum" type="number" name="buildingSocietySaverBridgedSum{{i}}">
+        </div>
+      </div>
+      <div class="col-4 mb-2 ps-3">
+        {{ item.sum | currency:'EUR':'€':'1.2-2':'de-DE' }}
+      </div>
+      <div class="col-3">
+        <div class="input-group">
+          <span class="input-group-text">Zinssatz</span>
+          <input class="form-control" [(ngModel)]="item.interest" type="number" name="buildingSocietySaverBridgedInterest{{i}}">
+        </div>
+      </div>
+      <div class="col-9 ps-3">
+        <div class="input-group">
+          <span class="input-group-text">monatliche Rate</span>
+          <input class="form-control" [(ngModel)]="item.monthlyRate" type="number" name="buildingSocietySaverBridgedMonthlyRate{{i}}">
+        </div>
+      </div>
+      <div class="col-12 mt-4"><h6>Überbrückungsdarlehen</h6></div>
+      <div class="col-3">
+        <div class="input-group">
+          <span class="input-group-text">Darlehenssumme</span>
+          <input class="form-control" [(ngModel)]="item.bridgeSum" type="number" name="buildingSocietySaverBridgedBridgeSum{{i}}">
+        </div>
+      </div>
+      <div class="col-3">
+        <div class="input-group">
+          <span class="input-group-text">Zinssatz</span>
+          <input class="form-control" [(ngModel)]="item.bridgeInterest" type="number" name="buildingSocietySaverBridgedBridgeInterest{{i}}">
+        </div>
+      </div>
+      <div class="col-3">
+        <div class="input-group">
+          <span class="input-group-text">Laufzeit</span>
+          <input class="form-control" [(ngModel)]="item.bridgeRunTime" type="number" name="buildingSocietySaverBridgedRunTime{{i}}">
+        </div>
+      </div>
+      <div class="col-12 mt-3">
+        <button class="btn btn-sm btn-outline-danger" (click)="removeBuildingSocietySaversBridged(item.id)">Löschen</button>
+      </div>
+    </div>
+
+
     <h5>Darlehen</h5>
     <button class="btn btn-sm btn-outline-primary mb-2" (click)="addCredit()">Darlehen hinzufügen</button>
     <div class="d-flex flex-wrap align-items-center mb-1 credit-wrapper" *ngFor="let item of data.credits; let i = index">
@@ -95,6 +148,9 @@
           <span class="input-group-text">Tilgungssatz</span>
           <input class="form-control" [(ngModel)]="item.acquittance" type="number" name="creditAcquittance{{i}}">
         </div>
+      </div>
+      <div class="col-12 mt-3">
+        <button class="btn btn-sm btn-outline-danger" (click)="removeCredit(item.id)">Löschen</button>
       </div>
     </div>
   </form>
