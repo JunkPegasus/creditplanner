@@ -16,142 +16,150 @@
     </div>
   </div>
 </nav>
-<div class="container">
+<div class="container-fluid">
   <div class="toolbar-container d-flex justify-content-between my-3">
     <button class="btn btn-primary" (click)="saveData()">Eingaben übernehmen</button>
     <button class="btn btn-danger" (click)="resetData()">Eingaben zurücksetzen</button>
   </div>
   <form id="calculation-container mb-3">
-    <div class="d-flex align-items-center mb-3">
+
+    <div class="row">
       <div class="col-8">
-        <div class="input-group">
-          <span class="input-group-text" id="cost-group">Kosten</span>
-          <input type="number" class="form-control" aria-label="cost" aria-describedby="cost-group" [(ngModel)]="data.cost" name="cost">
+        <div class="d-flex align-items-center mb-3">
+          <div class="col-8">
+            <div class="input-group">
+              <span class="input-group-text" id="cost-group">Kosten</span>
+              <input type="number" class="form-control" aria-label="cost" aria-describedby="cost-group" [(ngModel)]="data.cost" name="cost">
+            </div>
+          </div>
+          <div class="col-4 ps-3">
+            {{ data.cost | currency:'EUR':'€':'1.2-2':'de-DE' }}
+          </div>
+        </div>
+
+        <h5>Eigenkapital</h5>
+        <div class="d-flex flex-wrap align-items-center mb-3">
+          <div class="col-8">
+            <div class="input-group">
+              <span class="input-group-text">Eigenkapital</span>
+              <input type="number" class="form-control" [(ngModel)]="data.cash" name="cash">
+            </div>
+          </div>
+          <div class="col-4 ps-3">
+            {{ data.cash | currency:'EUR':'€':'1.2-2':'de-DE' }}
+          </div>
         </div>
       </div>
-      <div class="col-4 ps-3">
-        {{ data.cost | currency:'EUR':'€':'1.2-2':'de-DE' }}
-      </div>
+
     </div>
 
-    <h5>Eigenkapital</h5>
-    <div class="d-flex flex-wrap align-items-center mb-3">
-      <div class="col-8">
-        <div class="input-group">
-          <span class="input-group-text">Eigenkapital</span>
-          <input type="number" class="form-control" [(ngModel)]="data.cash" name="cash">
-        </div>
-      </div>
-      <div class="col-4 ps-3">
-        {{ data.cash | currency:'EUR':'€':'1.2-2':'de-DE' }}
-      </div>
-    </div>
+    <div class="row">
+      <div class="col-4">
+        <h5>Bausparer</h5>
+        <div class="d-flex flex-wrap align-items-center mb-2 society-wrapper">
 
-    <h5>Bausparer</h5>
-    <button class="btn btn-sm btn-outline-primary mb-2" (click)="addBuildingSocietySavers()">Bausparer hinzufügen</button>
-    <div class="d-flex flex-wrap align-items-center mb-2 society-wrapper" *ngFor="let item of data.buildingSocietySavers; let i = index">
-      <div class="col-8 mb-2">
-        <div class="input-group">
-          <span class="input-group-text">Darlehenssumme</span>
-          <input class="form-control" [(ngModel)]="item.sum" type="number" name="buildingSocietySaverSum{{i}}">
+          <div class="col-12 mb-2">
+            <div class="input-group">
+              <span class="input-group-text">Darlehenssumme</span>
+              <input class="form-control" [(ngModel)]="data.buildingSocietySaver.sum" type="number" name="buildingSocietySaverSum">
+            </div>
+          </div>
+          <div class="col-12 mb-2">
+            {{ data.buildingSocietySaver.sum | currency:'EUR':'€':'1.2-2':'de-DE' }}
+          </div>
+          <div class="col-12 mb-2">
+            <div class="input-group">
+              <span class="input-group-text">Zinssatz</span>
+              <input class="form-control" [(ngModel)]="data.buildingSocietySaver.interest" type="number" name="buildingSocietySaverInterest">
+            </div>
+          </div>
+          <div class="col-12 mb-2">
+            <div class="input-group">
+              <span class="input-group-text">monatliche Rate</span>
+              <input class="form-control" [(ngModel)]="data.buildingSocietySaver.monthlyRate" type="number" name="buildingSocietySaverMonthlyRate">
+            </div>
+          </div>
         </div>
       </div>
-      <div class="col-4 mb-2 ps-3">
-        {{ item.sum | currency:'EUR':'€':'1.2-2':'de-DE' }}
-      </div>
-      <div class="col-3">
-        <div class="input-group">
-          <span class="input-group-text">Zinssatz</span>
-          <input class="form-control" [(ngModel)]="item.interest" type="number" name="buildingSocietySaverInterest{{i}}">
-        </div>
-      </div>
-      <div class="col-3 ps-3">
-        <div class="input-group">
-          <span class="input-group-text">monatliche Rate</span>
-          <input class="form-control" [(ngModel)]="item.monthlyRate" type="number" name="buildingSocietySaverMonthlyRate{{i}}">
-        </div>
-      </div>
-      <div class="col-12 mt-3">
-        <button class="btn btn-sm btn-outline-danger" (click)="removeBuildingSocietySavers(item.id)">Löschen</button>
-      </div>
-    </div>
-
-    <h5>Bausparer (überbrückt)</h5>
-    <button class="btn btn-sm btn-outline-primary mb-2" (click)="addBuildingSocietySaverBridged()">Bausparer (überbrückt) hinzufügen</button>
-    <div class="d-flex flex-wrap align-items-center mb-2 society-wrapper" *ngFor="let item of data.buildingSocietySaversBridged; let i = index">
-      <div class="col-8 mb-2">
-        <div class="input-group">
-          <span class="input-group-text">Darlehenssumme</span>
-          <input class="form-control" [(ngModel)]="item.sum" type="number" name="buildingSocietySaverBridgedSum{{i}}">
-        </div>
-      </div>
-      <div class="col-4 mb-2 ps-3">
-        {{ item.sum | currency:'EUR':'€':'1.2-2':'de-DE' }}
-      </div>
-      <div class="col-3">
-        <div class="input-group">
-          <span class="input-group-text">Zinssatz</span>
-          <input class="form-control" [(ngModel)]="item.interest" type="number" name="buildingSocietySaverBridgedInterest{{i}}">
-        </div>
-      </div>
-      <div class="col-9 ps-3">
-        <div class="input-group">
-          <span class="input-group-text">monatliche Rate</span>
-          <input class="form-control" [(ngModel)]="item.monthlyRate" type="number" name="buildingSocietySaverBridgedMonthlyRate{{i}}">
-        </div>
-      </div>
-      <div class="col-12 mt-4"><h6>Überbrückungsdarlehen</h6></div>
-      <div class="col-3">
-        <div class="input-group">
-          <span class="input-group-text">Darlehenssumme</span>
-          <input class="form-control" [(ngModel)]="item.bridgeSum" type="number" name="buildingSocietySaverBridgedBridgeSum{{i}}">
-        </div>
-      </div>
-      <div class="col-3">
-        <div class="input-group">
-          <span class="input-group-text">Zinssatz</span>
-          <input class="form-control" [(ngModel)]="item.bridgeInterest" type="number" name="buildingSocietySaverBridgedBridgeInterest{{i}}">
-        </div>
-      </div>
-      <div class="col-3">
-        <div class="input-group">
-          <span class="input-group-text">Laufzeit</span>
-          <input class="form-control" [(ngModel)]="item.bridgeRunTime" type="number" name="buildingSocietySaverBridgedRunTime{{i}}">
-        </div>
-      </div>
-      <div class="col-12 mt-3">
-        <button class="btn btn-sm btn-outline-danger" (click)="removeBuildingSocietySaversBridged(item.id)">Löschen</button>
-      </div>
-    </div>
 
 
-    <h5>Darlehen</h5>
-    <button class="btn btn-sm btn-outline-primary mb-2" (click)="addCredit()">Darlehen hinzufügen</button>
-    <div class="d-flex flex-wrap align-items-center mb-1 credit-wrapper" *ngFor="let item of data.credits; let i = index">
-      <div class="col-8 mb-2">
-        <div class="input-group">
-          <span class="input-group-text">Darlehenssumme</span>
-          <input class="form-control" [(ngModel)]="item.sum" type="number" name="creditSum{{i}}">
+      <div class="col-4">
+        <h5>Bausparer (überbrückt)</h5>
+        <div class="d-flex flex-wrap align-items-center mb-2 society-wrapper">
+          <div class="col-12 mb-2">
+            <div class="input-group">
+              <span class="input-group-text">Darlehenssumme</span>
+              <input class="form-control" [(ngModel)]="data.buildingSocietySaverBridged.sum" type="number" name="buildingSocietySaverBridgedSum">
+            </div>
+          </div>
+          <div class="col-12 mb-2">
+            {{ data.buildingSocietySaverBridged.sum | currency:'EUR':'€':'1.2-2':'de-DE' }}
+          </div>
+          <div class="col-12 mb-2">
+            <div class="input-group">
+              <span class="input-group-text">Zinssatz</span>
+              <input class="form-control" [(ngModel)]="data.buildingSocietySaverBridged.interest" type="number" name="buildingSocietySaverBridgedInterest">
+            </div>
+          </div>
+          <div class="col-12 mb-2">
+            <div class="input-group">
+              <span class="input-group-text">monatliche Rate</span>
+              <input class="form-control" [(ngModel)]="data.buildingSocietySaverBridged.monthlyRate" type="number" name="buildingSocietySaverBridgedMonthlyRate">
+            </div>
+          </div>
+          <div class="col-12 mt-4"><h6>Überbrückungsdarlehen</h6></div>
+          <div class="col-12 mb-2">
+            <div class="input-group">
+              <span class="input-group-text">Darlehenssumme</span>
+              <input class="form-control" [(ngModel)]="data.buildingSocietySaverBridged.bridgeSum" type="number" name="buildingSocietySaverBridgedBridgeSum">
+            </div>
+          </div>
+          <div class="col-12 mb-2">
+            {{ data.buildingSocietySaverBridged.bridgeSum | currency:'EUR':'€':'1.2-2':'de-DE' }}
+          </div>
+          <div class="col-12 mb-2">
+            <div class="input-group">
+              <span class="input-group-text">Zinssatz</span>
+              <input class="form-control" [(ngModel)]="data.buildingSocietySaverBridged.bridgeInterest" type="number" name="buildingSocietySaverBridgedBridgeInterest">
+            </div>
+          </div>
+          <div class="col-12 mb-2">
+            <div class="input-group">
+              <span class="input-group-text">Laufzeit</span>
+              <input class="form-control" [(ngModel)]="data.buildingSocietySaverBridged.bridgeRunTime" type="number" name="buildingSocietySaverBridgedRunTime">
+            </div>
+          </div>
         </div>
       </div>
-      <div class="col-4 mb-2 ps-3">
-        {{ item.sum | currency:'EUR':'€':'1.2-2':'de-DE' }}
-      </div>
-      <div class="col-3">
-        <div class="input-group">
-          <span class="input-group-text">Zinssatz</span>
-          <input class="form-control" [(ngModel)]="item.interest" type="number" name="creditInterest{{i}}">
+
+
+      <div class="col-4">
+        <h5>Annuitätendarlehen</h5>
+        <div class="d-flex flex-wrap align-items-center mb-1 credit-wrapper">
+          <div class="col-12 mb-2">
+            <div class="input-group">
+              <span class="input-group-text">Darlehenssumme</span>
+              <input class="form-control" [(ngModel)]="data.credit.sum" type="number" name="creditSum">
+            </div>
+          </div>
+          <div class="col-12 mb-2">
+            {{ data.credit.sum | currency:'EUR':'€':'1.2-2':'de-DE' }}
+          </div>
+          <div class="col-12 mb-2">
+            <div class="input-group">
+              <span class="input-group-text">Zinssatz</span>
+              <input class="form-control" [(ngModel)]="data.credit.interest" type="number" name="creditInterest">
+            </div>
+          </div>
+          <div class="col-12 mb-2">
+            <div class="input-group">
+              <span class="input-group-text">Tilgungssatz</span>
+              <input class="form-control" [(ngModel)]="data.credit.acquittance" type="number" name="creditAcquittance">
+            </div>
+          </div>
         </div>
       </div>
-      <div class="col-3 ps-3">
-        <div class="input-group">
-          <span class="input-group-text">Tilgungssatz</span>
-          <input class="form-control" [(ngModel)]="item.acquittance" type="number" name="creditAcquittance{{i}}">
-        </div>
-      </div>
-      <div class="col-12 mt-3">
-        <button class="btn btn-sm btn-outline-danger" (click)="removeCredit(item.id)">Löschen</button>
-      </div>
+
     </div>
-  </form>
+      </form>
 </div>
