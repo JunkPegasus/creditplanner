@@ -68,7 +68,8 @@ export class CreditModel {
       interestList: interestList,
       remainderOfADebtList: remainderOfADebtList,
       interestSum: interestSum,
-      sum: completeSum
+      sum: completeSum,
+      monthlyRate: annuity / 12
     }
   }
 }
@@ -80,5 +81,6 @@ export interface CreditCalculation {
 
   interestSum: number;
   sum: number;
+  monthlyRate: number;
 }
 

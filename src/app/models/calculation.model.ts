@@ -7,25 +7,29 @@ export interface CalculationInterface {
   cost: number;
   cash: number;
   timestamp: Date;
-  buildingSocietySavers: Array<BuildingSocietySaverModel>;
-  credits: Array<CreditModel>;
-  buildingSocietySaversBridged: Array<BuildingSocietySaverBridgedModel>;
+  buildingSocietySaver: BuildingSocietySaverModel;
+  credit: CreditModel;
+  buildingSocietySaverBridged: BuildingSocietySaverBridgedModel;
 }
 export class CalculationModel {
   public cost: number;
   public cash: number;
   public timestamp: Date;
-  public buildingSocietySavers: Array<BuildingSocietySaverModel>;
-  public credits: Array<CreditModel>;
-  public buildingSocietySaversBridged: Array<BuildingSocietySaverBridgedModel>;
+  public buildingSocietySaver: BuildingSocietySaverModel;
+  public credit: CreditModel;
+  public buildingSocietySaverBridged: BuildingSocietySaverBridgedModel;
   public chartData: EChartsOption;
 
   constructor(data: CalculationInterface) {
+    let bSS = data.buildingSocietySaver;
+    let bSSB = data.buildingSocietySaverBridged;
+    let c = data.credit;
+
     this.cost = data.cost;
     this.timestamp = data.timestamp;
-    this.buildingSocietySavers = data.buildingSocietySavers.map(item => { return new BuildingSocietySaverModel(item.id, item.sum, item.interest, item.monthlyRate) });
-    this.credits =  data.credits.map(item => { return new CreditModel(item.id, item.sum, item.interest, item.acquittance) });
-    this.buildingSocietySaversBridged = data.buildingSocietySaversBridged.map(item => { return new BuildingSocietySaverBridgedModel(item.id, item.sum, item.interest, item.monthlyRate, item.bridgeSum, item.bridgeInterest, item.bridgeRunTime) })
+    this.buildingSocietySaver = new BuildingSocietySaverModel(bSS.id, bSS.sum, bSS.interest, bSS.monthlyRate);
+    this.credit =  new CreditModel(c.id, c.sum, c.interest, c.acquittance);
+    this.buildingSocietySaverBridged = new BuildingSocietySaverBridgedModel(bSSB.id, bSSB.sum, bSSB.interest, bSSB.monthlyRate, bSSB.bridgeSum, bSSB.bridgeInterest, bSSB.bridgeRunTime);
     this.cash = data.cash;
     this.chartData = this.calculateChartData();
 
@@ -34,22 +38,20 @@ export class CalculationModel {
   private calculateChartData(): EChartsOption {
     let xAxisData = [];
     let seriesSumData = [];
+    let cashData = [this.cash, this.cash, this.cash];
     let seriesInterestData = [];
-    if(this.buildingSocietySavers.length > 0) {
-      xAxisData.push('Bausparer');
-      seriesSumData.push(this.buildingSocietySavers.map(item => item.sum).reduce((a,b) => a + b, 0));
-      seriesInterestData.push(this.buildingSocietySavers.map(item => item.result.interestSum).reduce((a,b) => a + b, 0));
-    }
-    if(this.credits.length > 0) {
-      xAxisData.push('Darlehen');
-      seriesSumData.push(this.credits.map(item => item.sum).reduce((a,b) => a + b, 0));
-      seriesInterestData.push(this.credits.map(item => item.result.interestSum).reduce((a,b) => a + b, 0));
-    }
-    if(this.buildingSocietySaversBridged.length > 0) {
-      xAxisData.push('Bausparer (überbrückt)');
-      seriesSumData.push(this.buildingSocietySaversBridged.map(item => item.sum).reduce((a,b) => a + b, 0));
-      seriesInterestData.push(this.buildingSocietySaversBridged.map(item => item.result.interestSum).reduce((a,b) => a + b, 0));
-    }
+    xAxisData.push('Bausparer');
+    seriesSumData.push(this.buildingSocietySaver.sum);
+    seriesInterestData.push(this.buildingSocietySaver.result.interestSum);
+
+    xAxisData.push('Bausparer (überbrückt)');
+    seriesSumData.push(this.buildingSocietySaverBridged.sum);
+    seriesInterestData.push(this.buildingSocietySaverBridged.result.interestSum);
+
+    xAxisData.push('Darlehen');
+    seriesSumData.push(this.credit.sum);
+    seriesInterestData.push(this.credit.result.interestSum);
+
 
 
 
@@ -62,11 +64,25 @@ export class CalculationModel {
       },
       series: [
         {
+          name: 'Eigenkapital',
+          type: 'bar',
+          data: cashData,
+          stack: 'x',
+          color: '#3E4E50',
+          markLine: {
+              data: [
+                {
+                  yAxis: this.cost
+                }
+              ]
+          }
+        },
+        {
           name: 'Summe',
           type: 'bar',
           data: seriesSumData,
           stack: 'x',
-          color: '#3E4E50'
+          color: '#fa8b69'
         },
         {
           name: 'Zinsen',
@@ -77,7 +93,7 @@ export class CalculationModel {
         }
       ],
       legend: {
-        data: ['Summe','Zinsen']
+        data: ['Eigenkapital','Summe','Zinsen']
       },
       grid: {
         show: true
@@ -90,71 +106,4 @@ export class CalculationModel {
 
     return data;
   }
-
-  buildingSocietySaversSum(): number {
-    let sum = 0;
-    this.buildingSocietySavers.forEach( el => {
-      sum += el.sum;
-    });
-    return sum;
-  }
-  buildingSocietySaversPercentStyle(): string {
-    let sum = this.buildingSocietySaversSum() + this.buildingSocietySaversBridgedSum();
-    let percent = sum / this.cost * 100;
-    return `${percent}%`;
-  }
-  buildingSocietySaversPercent(): number {
-    let sum = this.buildingSocietySaversSum() + this.buildingSocietySaversBridgedSum();
-    return sum / this.cost * 100;
-  }
-  hasBuildingSocietySavers(): boolean {
-    return this.buildingSocietySavers?.length > 0;
-  }
-
-  buildingSocietySaversBridgedSum(): number {
-    let sum = 0;
-    this.buildingSocietySaversBridged.forEach( el => {
-      sum += el.sum;
-    });
-    return sum;
-  }
-  buildingSocietySaversBridgedPercent(): number {
-    let sum = this.buildingSocietySaversBridgedSum();
-    return sum / this.cost * 100;
-  }
-  hasBuildingSocietySaversBridged(): boolean {
-    return this.buildingSocietySaversBridged?.length > 0;
-  }
-
-
-
-  cashPercentStyle(): string {
-    let percent = this.cash / this.cost * 100;
-    return `${percent}%`;
-  }
-  cashPercent(): number {
-    return this.cash / this.cost * 100;
-  }
-
-
-  creditSum(): number {
-    let sum = 0;
-    this.credits.forEach( el => {
-      sum += el.sum;
-    });
-    return sum;
-  }
-  creditPercentStyle(): string {
-    let sum = this.creditSum();
-    let percent = sum / this.cost * 100;
-    return `${percent}%`;
-  }
-  creditPercent(): number {
-    let sum = this.creditSum();
-    return sum / this.cost * 100;
-  }
-  hasCredits(): boolean {
-    return this.credits?.length > 0;
-  }
-
 }
