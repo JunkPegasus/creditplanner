@@ -27,26 +27,13 @@
       <div class="col-8">
         <div class="d-flex align-items-center mb-3">
           <div class="col-8">
-            <div class="input-group">
+            <div class="input-group input-group-lg">
               <span class="input-group-text" id="cost-group">Kosten</span>
               <input type="number" class="form-control" aria-label="cost" aria-describedby="cost-group" [(ngModel)]="data.cost" name="cost">
             </div>
           </div>
           <div class="col-4 ps-3">
             {{ data.cost | currency:'EUR':'€':'1.2-2':'de-DE' }}
-          </div>
-        </div>
-
-        <h5>Eigenkapital</h5>
-        <div class="d-flex flex-wrap align-items-center mb-3">
-          <div class="col-8">
-            <div class="input-group">
-              <span class="input-group-text">Eigenkapital</span>
-              <input type="number" class="form-control" [(ngModel)]="data.cash" name="cash">
-            </div>
-          </div>
-          <div class="col-4 ps-3">
-            {{ data.cash | currency:'EUR':'€':'1.2-2':'de-DE' }}
           </div>
         </div>
       </div>
@@ -57,7 +44,15 @@
       <div class="col-4">
         <h5>Bausparer</h5>
         <div class="d-flex flex-wrap align-items-center mb-2 society-wrapper">
-
+          <div class="col-12 mb-2">
+            <div class="input-group">
+              <span class="input-group-text">Eigenkapital</span>
+              <input class="form-control" [(ngModel)]="data.buildingSocietySaver.cash" type="number" name="buildingSocietySaverCash">
+            </div>
+          </div>
+          <div class="col-12 mb-2">
+            {{ data.buildingSocietySaver.cash | currency:'EUR':'€':'1.2-2':'de-DE' }}
+          </div>
           <div class="col-12 mb-2">
             <div class="input-group">
               <span class="input-group-text">Darlehenssumme</span>
@@ -86,6 +81,15 @@
       <div class="col-4">
         <h5>Bausparer (überbrückt)</h5>
         <div class="d-flex flex-wrap align-items-center mb-2 society-wrapper">
+          <div class="col-12 mb-2">
+            <div class="input-group">
+              <span class="input-group-text">Eigenkapital</span>
+              <input class="form-control" [(ngModel)]="data.buildingSocietySaverBridged.cash" type="number" name="buildingSocietySaverBridgedCash">
+            </div>
+          </div>
+          <div class="col-12 mb-2">
+            {{ data.buildingSocietySaverBridged.cash | currency:'EUR':'€':'1.2-2':'de-DE' }}
+          </div>
           <div class="col-12 mb-2">
             <div class="input-group">
               <span class="input-group-text">Darlehenssumme</span>
@@ -136,6 +140,15 @@
       <div class="col-4">
         <h5>Annuitätendarlehen</h5>
         <div class="d-flex flex-wrap align-items-center mb-1 credit-wrapper">
+          <div class="col-12 mb-2">
+            <div class="input-group">
+              <span class="input-group-text">Eigenkapital</span>
+              <input class="form-control" [(ngModel)]="data.credit.cash" type="number" name="creditCash">
+            </div>
+          </div>
+          <div class="col-12 mb-2">
+            {{ data.credit.cash | currency:'EUR':'€':'1.2-2':'de-DE' }}
+          </div>
           <div class="col-12 mb-2">
             <div class="input-group">
               <span class="input-group-text">Darlehenssumme</span>

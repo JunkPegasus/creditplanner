@@ -9,7 +9,7 @@ $wwGray: rgb(246,246,246);
     "numbers numbers"
     "graphs graphs";
   position: absolute;
-  top: 60px;
+  top: 0px;
   bottom: 0;
   right: 0;
   left: 0;
@@ -43,7 +43,7 @@ $wwGray: rgb(246,246,246);
 }
 
 .grid-house, .grid-graphs, .grid-numbers {
-  margin: 10px;
+  margin: 5px;
   border: 1px solid rgba($wwOrange, 1);
   border-radius: 20px;
   overflow: hidden;

@@ -9,6 +9,7 @@ export class BuildingSocietySaverBridgedModel {
     public bridgeSum: number,
     public bridgeInterest: number,
     public bridgeRunTime: number,
+    public cash: number
   ) {
   }
 
@@ -73,7 +74,8 @@ export class BuildingSocietySaverBridgedModel {
       remainderOfADebtList: remainderOfADebtList,
       interestSum: interestSum,
       interestBridgeSum: interestBridgeSum,
-      sum: completeSum
+      sum: completeSum,
+      cash: this.cash
     }
   }
 }
@@ -82,6 +84,7 @@ export interface BuildingSocietySaverBridgeCalculation {
   interestList: Array<number>;
   acquittanceList: Array<number>;
   remainderOfADebtList: Array<number>;
+  cash:number;
 
   interestSum: number;
   interestBridgeSum: number;

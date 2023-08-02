@@ -1,9 +1,5 @@
-<nav class="nav p-2">
-    <img src="assets/logo.svg"/>
-</nav>
-
 <div class="presentation-grid">
-  <div class="grid-numbers p-4">
+  <div class="grid-numbers p-1">
     <table class="table table-borderless">
       <tbody>
         <tr>
@@ -17,36 +13,36 @@
         </tr>
         <tr>
           <td>Bausparer</td>
-          <td align="right">{{ data.buildingSocietySaver.sum | currency:'EUR':'€':'1.2-2':'de-DE' }}</td>
+          <td align="right">{{ data.buildingSocietySaver.sum | currency:'EUR':'€':'1.0-0':'de-DE' }}</td>
           <td align="right">{{ (data.buildingSocietySaver.interest / 100) | percent }}</td>
           <td></td>
-          <td align="right" class="ww-bold">{{ data.buildingSocietySaver.result.interestSum | currency:'EUR':'€':'1.2-2':'de-DE' }}</td>
-          <td align="right">{{ data.buildingSocietySaver.monthlyRate | currency:'EUR':'€':'1.2-2':'de-DE'  }}</td>
-          <td align="right" class="ww-bold orange">{{ data.buildingSocietySaver.result.sum | currency:'EUR':'€':'1.2-2':'de-DE' }}</td>
+          <td align="right" class="ww-bold">{{ data.buildingSocietySaver.result.interestSum | currency:'EUR':'€':'1.0-0':'de-DE' }}</td>
+          <td align="right">{{ data.buildingSocietySaver.monthlyRate | currency:'EUR':'€':'1.0-0':'de-DE'  }}</td>
+          <td align="right" class="ww-bold orange">{{ data.buildingSocietySaver.result.sum | currency:'EUR':'€':'1.0-0':'de-DE' }}</td>
         </tr>
         <tr>
           <td>Bausparer (überbrückt)</td>
-          <td align="right">{{ data.buildingSocietySaverBridged.sum | currency:'EUR':'€':'1.2-2':'de-DE' }}</td>
+          <td align="right">{{ data.buildingSocietySaverBridged.sum | currency:'EUR':'€':'1.0-0':'de-DE' }}</td>
           <td align="right">{{ (data.buildingSocietySaverBridged.interest / 100) | percent }}</td>
-          <td align="right" class="ww-bold">{{ data.buildingSocietySaverBridged.result.interestBridgeSum | currency:'EUR':'€':'1.2-2':'de-DE' }}</td>
-          <td align="right" class="ww-bold">{{ data.buildingSocietySaverBridged.result.interestSum | currency:'EUR':'€':'1.2-2':'de-DE' }}</td>
-          <td align="right">{{ data.buildingSocietySaverBridged.monthlyRate | currency:'EUR':'€':'1.2-2':'de-DE'  }}</td>
-          <td align="right" class="ww-bold orange">{{ data.buildingSocietySaverBridged.result.sum | currency:'EUR':'€':'1.2-2':'de-DE' }}</td>
+          <td align="right" class="ww-bold">{{ data.buildingSocietySaverBridged.result.interestBridgeSum | currency:'EUR':'€':'1.0-0':'de-DE' }}</td>
+          <td align="right" class="ww-bold">{{ data.buildingSocietySaverBridged.result.interestSum | currency:'EUR':'€':'1.0-0':'de-DE' }}</td>
+          <td align="right">{{ data.buildingSocietySaverBridged.monthlyRate | currency:'EUR':'€':'1.0-0':'de-DE'  }}</td>
+          <td align="right" class="ww-bold orange">{{ data.buildingSocietySaverBridged.result.sum | currency:'EUR':'€':'1.0-0':'de-DE' }}</td>
         </tr>
         <tr>
           <td>Annuitätendarlehen</td>
-          <td align="right">{{ data.credit.sum | currency:'EUR':'€':'1.2-2':'de-DE' }}</td>
+          <td align="right">{{ data.credit.sum | currency:'EUR':'€':'1.0-0':'de-DE' }}</td>
           <td align="right">{{ (data.credit.interest / 100) | percent }}</td>
           <td></td>
-          <td align="right" class="ww-bold">{{ data.credit.result.interestSum | currency:'EUR':'€':'1.2-2':'de-DE' }}</td>
-          <td align="right">{{ data.credit.result.monthlyRate | currency:'EUR':'€':'1.2-2':'de-DE' }}</td>
-          <td align="right" class="ww-bold orange">{{ data.credit.result.sum | currency:'EUR':'€':'1.2-2':'de-DE' }}</td>
+          <td align="right" class="ww-bold">{{ data.credit.result.interestSum | currency:'EUR':'€':'1.0-0':'de-DE' }}</td>
+          <td align="right">{{ data.credit.result.monthlyRate | currency:'EUR':'€':'1.0-0':'de-DE' }}</td>
+          <td align="right" class="ww-bold orange">{{ data.credit.result.sum | currency:'EUR':'€':'1.0-0':'de-DE' }}</td>
         </tr>
       </tbody>
     </table>
   </div>
   <div class="grid-graphs">
-    <div class="col-12 p-2">
+    <div class="col-12 p-1">
       <div>
         <div echarts [options]="data.chartData" [autoResize]="true"></div>
       </div>
