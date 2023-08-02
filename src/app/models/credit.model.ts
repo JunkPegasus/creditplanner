@@ -7,7 +7,8 @@ export class CreditModel {
     public id: string,
     public sum: number,
     public interest: number,
-    public acquittance: number
+    public acquittance: number,
+    public cash: number
   ) {}
 
 
@@ -69,7 +70,8 @@ export class CreditModel {
       remainderOfADebtList: remainderOfADebtList,
       interestSum: interestSum,
       sum: completeSum,
-      monthlyRate: annuity / 12
+      monthlyRate: annuity / 12,
+      cash: this.cash
     }
   }
 }
@@ -78,6 +80,7 @@ export interface CreditCalculation {
   interestList: Array<number>;
   acquittanceList: Array<number>;
   remainderOfADebtList: Array<number>;
+  cash: number;
 
   interestSum: number;
   sum: number;

@@ -5,6 +5,7 @@ import { BuildingSocietySaverModel } from '../models/buildingSocietySaver.model'
 import { CreditModel } from '../models/credit.model';
 import { Guid } from "guid-typescript";
 import { BuildingSocietySaverBridgedModel } from '../models/buildingSocietySaverBridged.model';
+import { DecimalPipe } from '@angular/common';
 
 @Component({
   selector: 'app-consultant',
@@ -15,12 +16,12 @@ export class ConsultantComponent {
 
   public data: CalculationModel;
 
-  constructor() {
+  constructor(private decimalPipe: DecimalPipe) {
     try {
       this.data = this.getBlankData();
       let jsonData = localStorage.getItem(CONSTANTS.STORAGE_KEY);
       if(jsonData != undefined) {
-        this.data = new CalculationModel(<CalculationInterface><unknown>JSON.parse(jsonData));
+        this.data = new CalculationModel(<CalculationInterface><unknown>JSON.parse(jsonData), decimalPipe);
       } else {
         this.resetData();
       }
@@ -48,10 +49,11 @@ export class ConsultantComponent {
       cost: 0,
       cash: 0,
       timestamp: new Date(),
-      buildingSocietySaver: new BuildingSocietySaverModel(Guid.create().toString(), 0,0,0),
-      credit: new CreditModel(Guid.create().toString(),0, 0, 0),
-      buildingSocietySaverBridged: new BuildingSocietySaverBridgedModel(Guid.create().toString(),0, 0, 0, 0, 0, 0)
-    });
+      buildingSocietySaver: new BuildingSocietySaverModel(Guid.create().toString(), 0,0,0,0),
+      credit: new CreditModel(Guid.create().toString(),0, 0, 0, 0),
+      buildingSocietySaverBridged: new BuildingSocietySaverBridgedModel(Guid.create().toString(),0, 0, 0, 0, 0, 0, 0)
+    },
+    this.decimalPipe);
   }
 
 }

@@ -2,6 +2,7 @@ import {AfterViewInit,  Component, OnDestroy} from '@angular/core';
 import { CalculationModel, CalculationInterface } from '../models/calculation.model';
 import { CONSTANTS } from '../constants';
 import { Subscription, interval } from 'rxjs';
+import { DecimalPipe } from '@angular/common';
 
 @Component({
   selector: 'app-presentation',
@@ -14,7 +15,7 @@ export class PresentationComponent implements OnDestroy, AfterViewInit {
   public sub!: Subscription;
 
 
-  constructor() {
+  constructor(private decimalPipe: DecimalPipe) {
     this.loadData();
   }
 
@@ -36,7 +37,7 @@ export class PresentationComponent implements OnDestroy, AfterViewInit {
     try {
       let jsonData = localStorage.getItem(CONSTANTS.STORAGE_KEY);
       if(jsonData != undefined) {
-        let storage = new CalculationModel(<CalculationInterface><unknown>JSON.parse(jsonData));
+        let storage = new CalculationModel(<CalculationInterface><unknown>JSON.parse(jsonData), this.decimalPipe);
         if(this.data != null) {
           if(this.data.timestamp < storage.timestamp) {
             this.data = storage;

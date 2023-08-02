@@ -7,7 +7,8 @@ export class BuildingSocietySaverModel {
     public id: string,
     public sum: number,
     public interest: number,
-    public monthlyRate: number
+    public monthlyRate: number,
+    public cash: number
   ) {
   }
 
@@ -69,7 +70,8 @@ export class BuildingSocietySaverModel {
       interestList: interestList,
       remainderOfADebtList: remainderOfADebtList,
       interestSum: interestSum,
-      sum: completeSum
+      sum: completeSum,
+      cash: this.cash
     }
   }
 }
@@ -78,6 +80,7 @@ export interface BuildingSocietySaverCalculation {
   interestList: Array<number>;
   acquittanceList: Array<number>;
   remainderOfADebtList: Array<number>;
+  cash: number;
 
   interestSum: number;
   sum: number;
