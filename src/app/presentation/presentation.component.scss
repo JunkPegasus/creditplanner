@@ -9,7 +9,7 @@ $wwGray: rgb(246,246,246);
     "numbers numbers"
     "graphs graphs";
   position: absolute;
-  top: 0px;
+  top: 0;
   bottom: 0;
   right: 0;
   left: 0;
@@ -134,7 +134,7 @@ $wwGray: rgb(246,246,246);
       color: white;
       padding: 2px 12px;
       border-radius: 5px;
-      font-family: 'WW-Bold';
+      font-family: 'WW-Bold', sans-serif;
       font-size: 22px;
       content: 'test';
     }
@@ -148,7 +148,7 @@ $wwGray: rgb(246,246,246);
       color: white;
       border-radius: 5px;
       font-size: 22px;
-      font-family: 'WW-Bold';
+      font-family: 'WW-Bold', sans-serif;
       padding: 2px 12px;
       content: attr(data-percent) ' %';
     }
@@ -176,4 +176,8 @@ $wwGray: rgb(246,246,246);
 .detail-header {
   background-color: $wwGray;
   border-radius: 8px;
+}
+
+.right {
+  text-align: right;
 }

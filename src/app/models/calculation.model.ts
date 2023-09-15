@@ -1,8 +1,8 @@
-import { BuildingSocietySaverBridgedModel } from './buildingSocietySaverBridged.model';
-import { EChartsOption } from 'echarts';
-import { BuildingSocietySaverModel } from './buildingSocietySaver.model';
-import { CreditModel } from './credit.model';
-import { DecimalPipe } from '@angular/common';
+import {BuildingSocietySaverBridgedModel} from './buildingSocietySaverBridged.model';
+import {EChartsOption} from 'echarts';
+import {BuildingSocietySaverModel} from './buildingSocietySaver.model';
+import {CreditModel} from './credit.model';
+import {DecimalPipe} from '@angular/common';
 
 export interface CalculationInterface {
   cost: number;
@@ -29,9 +29,9 @@ export class CalculationModel {
 
     this.cost = data.cost;
     this.timestamp = data.timestamp;
-    this.buildingSocietySaver = new BuildingSocietySaverModel(bSS.id, bSS.sum, bSS.interest, bSS.monthlyRate, bSS.cash);
+    this.buildingSocietySaver = new BuildingSocietySaverModel(bSS.id, bSS.sum, bSS.interest, bSS.monthlyRate, bSS.cash, bSS.interestAssuranceFeePercent);
     this.credit =  new CreditModel(c.id, c.sum, c.interest, c.acquittance, c.cash);
-    this.buildingSocietySaverBridged = new BuildingSocietySaverBridgedModel(bSSB.id, bSSB.sum, bSSB.interest, bSSB.monthlyRate, bSSB.bridgeSum, bSSB.bridgeInterest, bSSB.bridgeRunTime, bSSB.cash);
+    this.buildingSocietySaverBridged = new BuildingSocietySaverBridgedModel(bSSB.id, bSSB.sum, bSSB.interest, bSSB.monthlyRate, bSSB.bridgeSum, bSSB.bridgeInterest, bSSB.bridgeRunTime, bSSB.cash, bSSB.interestAssuranceFeePercent);
     this.chartData = this.calculateChartData();
 
   }
@@ -43,28 +43,32 @@ export class CalculationModel {
     let cashData = new Array<any>;
     let seriesInterestData = new Array<any>;
     let seriesInterestBridgedData = new Array<any>;
+    let seriesInterestAssuranceFeeData = new Array<any>;
     xAxisData.push('Bausparer');
-    seriesSumData.push(this.buildingSocietySaver.sum);
-    seriesInterestData.push(this.buildingSocietySaver.result.interestSum);
+    seriesSumData.push(Math.round(this.buildingSocietySaver.sum));
+    seriesInterestData.push(Math.round(this.buildingSocietySaver.result.interestSum));
     seriesInterestBridgedData.push(0);
-    cashData.push(this.buildingSocietySaver.cash);
+    cashData.push(Math.round(this.buildingSocietySaver.cash));
+    seriesInterestAssuranceFeeData.push(Math.round(this.buildingSocietySaver.result.interestAssuranceFee));
 
     xAxisData.push('Bausparer (überbrückt)');
-    seriesSumData.push(this.buildingSocietySaverBridged.sum);
-    seriesInterestData.push(this.buildingSocietySaverBridged.result.interestSum);
-    seriesInterestBridgedData.push(this.buildingSocietySaverBridged.result.interestBridgeSum);
-    cashData.push(this.buildingSocietySaverBridged.cash);
+    seriesSumData.push(Math.round(this.buildingSocietySaverBridged.sum));
+    seriesInterestData.push(Math.round(this.buildingSocietySaverBridged.result.interestSum));
+    seriesInterestBridgedData.push(Math.round(this.buildingSocietySaverBridged.result.interestBridgeSum));
+    cashData.push(Math.round(this.buildingSocietySaverBridged.cash));
+    seriesInterestAssuranceFeeData.push(Math.round(this.buildingSocietySaverBridged.result.interestAssuranceFee));
 
     xAxisData.push('Darlehen');
-    seriesSumData.push(this.credit.sum);
-    seriesInterestData.push(this.credit.result.interestSum);
+    seriesSumData.push(Math.round(this.credit.sum));
+    seriesInterestData.push(Math.round(this.credit.result.interestSum));
     seriesInterestBridgedData.push(0);
-    cashData.push(this.credit.cash);
+    cashData.push(Math.round(this.credit.cash));
+    seriesInterestAssuranceFeeData.push(0);
 
 
 
 
-    let data: EChartsOption = {
+    return {
       xAxis: {
         data: xAxisData
       },
@@ -79,11 +83,11 @@ export class CalculationModel {
           stack: 'x',
           color: '#3E4E50',
           markLine: {
-              data: [
-                {
-                  yAxis: this.cost
-                }
-              ]
+            data: [
+              {
+                yAxis: this.cost
+              }
+            ]
           }
         },
         {
@@ -101,6 +105,13 @@ export class CalculationModel {
           color: '#FFC100'
         },
         {
+          name: 'Zinssicherungsgebühr',
+          type: 'bar',
+          data: seriesInterestAssuranceFeeData,
+          stack: 'x',
+          color: '#D4FCC3'
+        },
+        {
           name: 'Zinsen',
           type: 'bar',
           data: seriesInterestData,
@@ -115,12 +126,12 @@ export class CalculationModel {
             distance: 10,
             formatter: function (params) {
               let sum = 0;
-              if(params.dataIndex == 0) sum = Me.buildingSocietySaver.result.sum;
-              if(params.dataIndex == 1) sum = Me.buildingSocietySaverBridged.result.sum;
-              if(params.dataIndex == 2) sum = Me.credit.result.sum;
+              if (params.dataIndex == 0) sum = Me.buildingSocietySaver.result.sum;
+              if (params.dataIndex == 1) sum = Me.buildingSocietySaverBridged.result.sum;
+              if (params.dataIndex == 2) sum = Me.credit.result.sum;
 
               let value = Me.decimalPipe.transform(sum, '1.0-0', 'de-DE');
-              if(value == null) value = '';
+              if (value == null) value = '';
               else value += ' €'
               return value;
             },
@@ -128,7 +139,7 @@ export class CalculationModel {
         }
       ],
       legend: {
-        data: ['Eigenkapital','Darlehenssumme','Überbrückungszinsen','Zinsen']
+        data: ['Eigenkapital', 'Darlehenssumme', 'Überbrückungszinsen', 'Zinsen', 'Zinssicherungsgebühr']
       },
       grid: {
         show: true
@@ -137,8 +148,6 @@ export class CalculationModel {
         show: true,
         trigger: 'axis'
       }
-    }
-
-    return data;
+    };
   }
 }
