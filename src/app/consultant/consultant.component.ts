@@ -49,9 +49,9 @@ export class ConsultantComponent {
       cost: 0,
       cash: 0,
       timestamp: new Date(),
-      buildingSocietySaver: new BuildingSocietySaverModel(Guid.create().toString(), 0,0,0,0),
+      buildingSocietySaver: new BuildingSocietySaverModel(Guid.create().toString(), 0,0,0,0,0),
       credit: new CreditModel(Guid.create().toString(),0, 0, 0, 0),
-      buildingSocietySaverBridged: new BuildingSocietySaverBridgedModel(Guid.create().toString(),0, 0, 0, 0, 0, 0, 0)
+      buildingSocietySaverBridged: new BuildingSocietySaverBridgedModel(Guid.create().toString(),0, 0, 0, 0, 0, 0, 0,0)
     },
     this.decimalPipe);
   }

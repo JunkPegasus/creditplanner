@@ -9,7 +9,8 @@ export class BuildingSocietySaverBridgedModel {
     public bridgeSum: number,
     public bridgeInterest: number,
     public bridgeRunTime: number,
-    public cash: number
+    public cash: number,
+    public interestAssuranceFeePercent: number
   ) {
   }
 
@@ -22,6 +23,7 @@ export class BuildingSocietySaverBridgedModel {
     let annuity: number = this.monthlyRate * 12;
     let acquittanceRate: number = (annuity - interestRate) / this.sum;
     let acquittance: number = this.sum * acquittanceRate;
+    let interestAssuranceFee: number = (this.sum + this.cash) * (this.interestAssuranceFeePercent / 100);
 
     let remainderOfADebt: number = this.sum - acquittance;
 
@@ -75,7 +77,8 @@ export class BuildingSocietySaverBridgedModel {
       interestSum: interestSum,
       interestBridgeSum: interestBridgeSum,
       sum: completeSum,
-      cash: this.cash
+      cash: this.cash,
+      interestAssuranceFee: interestAssuranceFee
     }
   }
 }
@@ -85,6 +88,7 @@ export interface BuildingSocietySaverBridgeCalculation {
   acquittanceList: Array<number>;
   remainderOfADebtList: Array<number>;
   cash:number;
+  interestAssuranceFee:number;
 
   interestSum: number;
   interestBridgeSum: number;

@@ -1,5 +1,3 @@
-import { EChartsOption } from "echarts";
-
 export class CreditModel {
 
 

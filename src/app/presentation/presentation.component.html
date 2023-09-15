@@ -8,38 +8,48 @@
           <th>Zinssatz</th>
           <th>Zinsen (Überbrückung)</th>
           <th>Zinsen</th>
+          <th>Zinssicherungsgebühr</th>
           <th>monatliche Rate</th>
           <th>Gesamt</th>
         </tr>
         <tr>
-          <td>Bausparer</td>
-          <td align="right">{{ data.buildingSocietySaver.sum | currency:'EUR':'€':'1.0-0':'de-DE' }}</td>
-          <td align="right">{{ (data.buildingSocietySaver.interest / 100) | percent }}</td>
+          <td>BS</td>
+          <td class="right">{{ data.buildingSocietySaver.sum | currency:'EUR':'€':'1.0-0':'de-DE' }}</td>
+          <td class="right">{{ (data.buildingSocietySaver.interest / 100) | percent }}</td>
           <td></td>
-          <td align="right" class="ww-bold">{{ data.buildingSocietySaver.result.interestSum | currency:'EUR':'€':'1.0-0':'de-DE' }}</td>
-          <td align="right">{{ data.buildingSocietySaver.monthlyRate | currency:'EUR':'€':'1.0-0':'de-DE'  }}</td>
-          <td align="right" class="ww-bold orange">{{ data.buildingSocietySaver.result.sum | currency:'EUR':'€':'1.0-0':'de-DE' }}</td>
+          <td class="ww-bold right">{{ data.buildingSocietySaver.result.interestSum | currency:'EUR':'€':'1.0-0':'de-DE' }}</td>
+          <td class="ww-bold right">{{ data.buildingSocietySaver.result.interestAssuranceFee | currency:'EUR':'€':'1.0-0':'de-DE' }}</td>
+          <td class="right">{{ data.buildingSocietySaver.monthlyRate | currency:'EUR':'€':'1.0-0':'de-DE'  }}</td>
+          <td class="ww-bold orange right">{{ data.buildingSocietySaver.result.sum | currency:'EUR':'€':'1.0-0':'de-DE' }}</td>
         </tr>
         <tr>
-          <td>Bausparer (überbrückt)</td>
-          <td align="right">{{ data.buildingSocietySaverBridged.sum | currency:'EUR':'€':'1.0-0':'de-DE' }}</td>
-          <td align="right">{{ (data.buildingSocietySaverBridged.interest / 100) | percent }}</td>
-          <td align="right" class="ww-bold">{{ data.buildingSocietySaverBridged.result.interestBridgeSum | currency:'EUR':'€':'1.0-0':'de-DE' }}</td>
-          <td align="right" class="ww-bold">{{ data.buildingSocietySaverBridged.result.interestSum | currency:'EUR':'€':'1.0-0':'de-DE' }}</td>
-          <td align="right">{{ data.buildingSocietySaverBridged.monthlyRate | currency:'EUR':'€':'1.0-0':'de-DE'  }}</td>
-          <td align="right" class="ww-bold orange">{{ data.buildingSocietySaverBridged.result.sum | currency:'EUR':'€':'1.0-0':'de-DE' }}</td>
+          <td>BS (ü)</td>
+          <td class="right">{{ data.buildingSocietySaverBridged.sum | currency:'EUR':'€':'1.0-0':'de-DE' }}</td>
+          <td class="right">{{ (data.buildingSocietySaverBridged.interest / 100) | percent }}</td>
+          <td class="ww-bold right">{{ data.buildingSocietySaverBridged.result.interestBridgeSum | currency:'EUR':'€':'1.0-0':'de-DE' }}</td>
+          <td class="ww-bold right">{{ data.buildingSocietySaverBridged.result.interestSum | currency:'EUR':'€':'1.0-0':'de-DE' }}</td>
+          <td class="ww-bold right">{{ data.buildingSocietySaverBridged.result.interestAssuranceFee | currency:'EUR':'€':'1.0-0':'de-DE' }}</td>
+          <td class="right">{{ data.buildingSocietySaverBridged.monthlyRate | currency:'EUR':'€':'1.0-0':'de-DE'  }}</td>
+          <td class="ww-bold orange right">{{ data.buildingSocietySaverBridged.result.sum | currency:'EUR':'€':'1.0-0':'de-DE' }}</td>
         </tr>
         <tr>
-          <td>Annuitätendarlehen</td>
-          <td align="right">{{ data.credit.sum | currency:'EUR':'€':'1.0-0':'de-DE' }}</td>
-          <td align="right">{{ (data.credit.interest / 100) | percent }}</td>
+          <td>AD</td>
+          <td class="right">{{ data.credit.sum | currency:'EUR':'€':'1.0-0':'de-DE' }}</td>
+          <td class="right">{{ (data.credit.interest / 100) | percent }}</td>
           <td></td>
-          <td align="right" class="ww-bold">{{ data.credit.result.interestSum | currency:'EUR':'€':'1.0-0':'de-DE' }}</td>
-          <td align="right">{{ data.credit.result.monthlyRate | currency:'EUR':'€':'1.0-0':'de-DE' }}</td>
-          <td align="right" class="ww-bold orange">{{ data.credit.result.sum | currency:'EUR':'€':'1.0-0':'de-DE' }}</td>
+          <td class="ww-bold right">{{ data.credit.result.interestSum | currency:'EUR':'€':'1.0-0':'de-DE' }}</td>
+          <td></td>
+          <td class="right">{{ data.credit.result.monthlyRate | currency:'EUR':'€':'1.0-0':'de-DE' }}</td>
+          <td class="ww-bold orange right">{{ data.credit.result.sum | currency:'EUR':'€':'1.0-0':'de-DE' }}</td>
         </tr>
       </tbody>
     </table>
+
+    <div class="d-flex justify-content-center">
+      <div class="mx-2"><strong>BS:</strong> Bausparer</div>
+      <div class="mx-2"><strong>BS (ü):</strong> Bausparer (überbrückt)</div>
+      <div class="mx-2"><strong>AD:</strong> Annuitätendarlehen</div>
+    </div>
   </div>
   <div class="grid-graphs">
     <div class="col-12 p-1">

@@ -1,14 +1,14 @@
-import {EChartsOption} from "echarts";
-
 export class BuildingSocietySaverModel {
 
 
+// Zinssicherungsgebühr (Prozent Darlehenssumme und Eigenkapital)
   constructor(
     public id: string,
     public sum: number,
     public interest: number,
     public monthlyRate: number,
-    public cash: number
+    public cash: number,
+    public interestAssuranceFeePercent: number
   ) {
   }
 
@@ -21,6 +21,8 @@ export class BuildingSocietySaverModel {
     let annuity: number = this.monthlyRate * 12;
     let acquittanceRate: number = (annuity - interestRate) / this.sum;
     let acquittance: number = this.sum * acquittanceRate;
+    let interestAssuranceFee: number = (this.sum + this.cash) * (this.interestAssuranceFeePercent / 100);
+    console.log(interestAssuranceFee);
 
     let remainderOfADebt: number = this.sum - acquittance;
 
@@ -71,7 +73,8 @@ export class BuildingSocietySaverModel {
       remainderOfADebtList: remainderOfADebtList,
       interestSum: interestSum,
       sum: completeSum,
-      cash: this.cash
+      cash: this.cash,
+      interestAssuranceFee: interestAssuranceFee
     }
   }
 }
@@ -81,6 +84,7 @@ export interface BuildingSocietySaverCalculation {
   acquittanceList: Array<number>;
   remainderOfADebtList: Array<number>;
   cash: number;
+  interestAssuranceFee: number;
 
   interestSum: number;
   sum: number;
