@@ -57,7 +57,7 @@ export class BuildingSocietySaverModel {
     }
 
     let interestSum = interestList.reduce((a,b) => a + b, 0);
-    let completeSum = interestSum + this.sum;
+    let completeSum = interestSum + interestAssuranceFee + this.sum;
 
     let labelList = new Array<string>();
     for(let i = 1; i < interestList.length + 2; i++){

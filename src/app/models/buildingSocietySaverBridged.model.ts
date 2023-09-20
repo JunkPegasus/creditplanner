@@ -67,6 +67,7 @@ export class BuildingSocietySaverBridgedModel {
     let interestBridgeSum = (this.bridgeInterest / 100) * this.bridgeSum * this.bridgeRunTime;
 
     completeSum += interestBridgeSum;
+    completeSum += interestAssuranceFee;
 
     console.log("calculate called");
 
