@@ -15,7 +15,7 @@
         <tr>
           <td>BS</td>
           <td class="right">{{ data.buildingSocietySaver.sum | currency:'EUR':'€':'1.0-0':'de-DE' }}</td>
-          <td class="right">{{ (data.buildingSocietySaver.interest / 100) | percent }}</td>
+          <td class="right">{{ (data.buildingSocietySaver.interest / 100) | percent:'1.2-2':'de-DE' }}</td>
           <td></td>
           <td class="ww-bold right">{{ data.buildingSocietySaver.result.interestSum | currency:'EUR':'€':'1.0-0':'de-DE' }}</td>
           <td class="ww-bold right">{{ data.buildingSocietySaver.result.interestAssuranceFee | currency:'EUR':'€':'1.0-0':'de-DE' }}</td>
@@ -25,7 +25,7 @@
         <tr>
           <td>BS (ü)</td>
           <td class="right">{{ data.buildingSocietySaverBridged.sum | currency:'EUR':'€':'1.0-0':'de-DE' }}</td>
-          <td class="right">{{ (data.buildingSocietySaverBridged.interest / 100) | percent }}</td>
+          <td class="right">{{ (data.buildingSocietySaverBridged.interest / 100) | percent:'1.2-2':'de-DE' }}</td>
           <td class="ww-bold right">{{ data.buildingSocietySaverBridged.result.interestBridgeSum | currency:'EUR':'€':'1.0-0':'de-DE' }}</td>
           <td class="ww-bold right">{{ data.buildingSocietySaverBridged.result.interestSum | currency:'EUR':'€':'1.0-0':'de-DE' }}</td>
           <td class="ww-bold right">{{ data.buildingSocietySaverBridged.result.interestAssuranceFee | currency:'EUR':'€':'1.0-0':'de-DE' }}</td>
@@ -35,7 +35,7 @@
         <tr>
           <td>AD</td>
           <td class="right">{{ data.credit.sum | currency:'EUR':'€':'1.0-0':'de-DE' }}</td>
-          <td class="right">{{ (data.credit.interest / 100) | percent }}</td>
+          <td class="right">{{ (data.credit.interest / 100) | percent:'1.2-2':'de-DE' }}</td>
           <td></td>
           <td class="ww-bold right">{{ data.credit.result.interestSum | currency:'EUR':'€':'1.0-0':'de-DE' }}</td>
           <td></td>
